@@ -1,0 +1,46 @@
+/* 1. Reset total y Box Sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Fundamental para layouts precisos */
+}
+
+/* 2. Configuración de la página */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased; /* Para que las letras se vean más nítidas */
+}
+
+/* 3. Variables para el futuro (Tarjeta 7) */
+:root {
+  --border-thickness: 3px;
+  --main-border: var(--border-thickness) solid #000;
+  --primary-bg: #ffffff;
+}
+
+/* 4. Limpieza de elementos comunes */
+ul,
+ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+.container {
+  width: 90%; /* Deja un 5% de margen a cada lado en móviles */
+  max-width: 1200px; /* Evita que en pantallas gigantes el dashboard se estire demasiado */
+  margin: 0 auto; /* Centra horizontalmente el bloque */
+  padding: 20px 0; /* Margen superior e inferior para que el contenido no pegue al Navbar */
+}
