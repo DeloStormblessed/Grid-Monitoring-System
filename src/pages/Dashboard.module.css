@@ -1,0 +1,40 @@
+/* Contenedor principal de la página */
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Separación entre la zona de tarjetas y la zona de la gráfica */
+}
+
+/* 1. Mobile First: Una columna */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+/* 2. Tablet: Dos columnas */
+@media (min-width: 600px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 3. Desktop: Cuatro columnas */
+@media (min-width: 1024px) {
+  .kpiGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Espacio temporal para la gráfica (estética wireframe) */
+.chartPlaceholder {
+  border: 3px solid #000;
+  background-color: #fff;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+  font-weight: bold;
+  text-transform: uppercase;
+}

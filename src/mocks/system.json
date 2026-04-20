@@ -1,0 +1,170 @@
+[
+  {
+    "hora": 0,
+    "demandaTotalKw": 811.976,
+    "perdidasKw": 6.665,
+    "vMaxPu": 1.02,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 1,
+    "demandaTotalKw": 811.959,
+    "perdidasKw": 6.665,
+    "vMaxPu": 1.02,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 2,
+    "demandaTotalKw": 811.959,
+    "perdidasKw": 6.665,
+    "vMaxPu": 1.02,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 3,
+    "demandaTotalKw": 928.727,
+    "perdidasKw": 7.919,
+    "vMaxPu": 1.018,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 4,
+    "demandaTotalKw": 1630.065,
+    "perdidasKw": 21.575,
+    "vMaxPu": 1.025,
+    "vMinPu": 0.995
+  },
+  {
+    "hora": 5,
+    "demandaTotalKw": 2308.363,
+    "perdidasKw": 42.831,
+    "vMaxPu": 1.037,
+    "vMinPu": 0.983
+  },
+  {
+    "hora": 6,
+    "demandaTotalKw": 2462.29,
+    "perdidasKw": 45.77,
+    "vMaxPu": 1.037,
+    "vMinPu": 0.988
+  },
+  {
+    "hora": 7,
+    "demandaTotalKw": 2008.505,
+    "perdidasKw": 27.893,
+    "vMaxPu": 1.037,
+    "vMinPu": 0.992
+  },
+  {
+    "hora": 8,
+    "demandaTotalKw": 1380.702,
+    "perdidasKw": 18.467,
+    "vMaxPu": 1.05,
+    "vMinPu": 0.989
+  },
+  {
+    "hora": 9,
+    "demandaTotalKw": 758.704,
+    "perdidasKw": 21.346,
+    "vMaxPu": 1.07,
+    "vMinPu": 0.989
+  },
+  {
+    "hora": 10,
+    "demandaTotalKw": 403.817,
+    "perdidasKw": 27.396,
+    "vMaxPu": 1.082,
+    "vMinPu": 0.987
+  },
+  {
+    "hora": 11,
+    "demandaTotalKw": 403.84,
+    "perdidasKw": 27.398,
+    "vMaxPu": 1.082,
+    "vMinPu": 0.987
+  },
+  {
+    "hora": 12,
+    "demandaTotalKw": 618.89,
+    "perdidasKw": 20.342,
+    "vMaxPu": 1.067,
+    "vMinPu": 0.988
+  },
+  {
+    "hora": 13,
+    "demandaTotalKw": 1275.74,
+    "perdidasKw": 16.907,
+    "vMaxPu": 1.039,
+    "vMinPu": 0.979
+  },
+  {
+    "hora": 14,
+    "demandaTotalKw": 2146.441,
+    "perdidasKw": 32.437,
+    "vMaxPu": 1.031,
+    "vMinPu": 0.98
+  },
+  {
+    "hora": 15,
+    "demandaTotalKw": 2615.867,
+    "perdidasKw": 49.848,
+    "vMaxPu": 1.044,
+    "vMinPu": 0.986
+  },
+  {
+    "hora": 16,
+    "demandaTotalKw": 3164.554,
+    "perdidasKw": 80.425,
+    "vMaxPu": 1.05,
+    "vMinPu": 0.973
+  },
+  {
+    "hora": 17,
+    "demandaTotalKw": 3168.952,
+    "perdidasKw": 87.137,
+    "vMaxPu": 1.05,
+    "vMinPu": 0.964
+  },
+  {
+    "hora": 18,
+    "demandaTotalKw": 2618.829,
+    "perdidasKw": 60.542,
+    "vMaxPu": 1.05,
+    "vMinPu": 0.983
+  },
+  {
+    "hora": 19,
+    "demandaTotalKw": 2059.045,
+    "perdidasKw": 36.866,
+    "vMaxPu": 1.045,
+    "vMinPu": 0.992
+  },
+  {
+    "hora": 20,
+    "demandaTotalKw": 1509.933,
+    "perdidasKw": 19.217,
+    "vMaxPu": 1.04,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 21,
+    "demandaTotalKw": 1237.868,
+    "perdidasKw": 13.002,
+    "vMaxPu": 1.034,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 22,
+    "demandaTotalKw": 966.531,
+    "perdidasKw": 8.525,
+    "vMaxPu": 1.035,
+    "vMinPu": 1.0
+  },
+  {
+    "hora": 23,
+    "demandaTotalKw": 813.401,
+    "perdidasKw": 6.659,
+    "vMaxPu": 1.026,
+    "vMinPu": 1.0
+  }
+]

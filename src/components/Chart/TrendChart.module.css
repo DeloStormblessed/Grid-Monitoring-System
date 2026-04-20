@@ -1,0 +1,50 @@
+.chartWrapper {
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.chartTitle {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.2s ease-out;
+}
+
+.chartWrapper:hover .chartTitle {
+  color: #555;
+}
+
+/* Estilos para suavizar animaciones del gráfico */
+.chartWrapper div[style*="height: 400px"] {
+  transition: all 0.15s ease-out;
+}
+
+/* Mejora de suavidad visual */
+.recharts-surface {
+  shape-rendering: crispEdges;
+}
+
+.recharts-curve {
+  transition: all 0.2s ease-out;
+}
+
+/* Suavidad para la línea de referencia */
+.recharts-reference-line {
+  transition: all 0.1s ease-out;
+}
+
+/* Optimización para dispositivos táctiles */
+@media (hover: none) and (pointer: coarse) {
+  .chartWrapper {
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  .chartTitle {
+    font-size: 16px;
+  }
+}
