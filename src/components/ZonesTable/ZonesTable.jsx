@@ -87,7 +87,7 @@ const ZonesTable = ({ selectedHour }) => {
           {tableData.map((row) => (
             <tr key={row.id}>
               <td>
-                <span className={styles.zonaName}>{row.zona}</span> <br/>
+                <span className={styles.zonaName}>{row.zona}</span>
                 <span className={styles.busId}>(bus {row.id})</span>
               </td>
               <td>{row.voltage !== null ? `${row.voltage.toFixed(3)} p.u. (Fase ${row.fase})` : 'N/A'}</td>

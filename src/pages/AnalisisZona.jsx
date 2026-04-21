@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import busesData from '../mocks/buses.json';
-import styles from './Dashboard.module.css'; // Reutilizamos el grid del Dashboard
+import styles from './AnalisisZona.module.css';
 
 const AnalisisZona = () => {
   const { id } = useParams();
@@ -58,9 +58,15 @@ const AnalisisZona = () => {
 
   if (!busInfo) {
     return (
-      <div className={styles.dashboardContainer}>
-        <h2>Zona no encontrada</h2>
-        <button onClick={() => navigate('/')}>Volver al Dashboard</button>
+      <div className={styles.pageContainer}>
+        <div className={styles.header}>
+          <h2 style={{ margin: 0 }}>Zona no encontrada</h2>
+        </div>
+        <div style={{ padding: '20px' }}>
+          <button onClick={() => navigate('/')} className={styles.backButton}>
+            ← VOLVER
+          </button>
+        </div>
       </div>
     );
   }
@@ -77,47 +83,45 @@ const AnalisisZona = () => {
   const yAxisTicks = [0.94, 0.96, 1.00, 1.04, 1.06];
 
   return (
-    <div className={styles.dashboardContainer}>
-      
-      {/* Cabecera con navegación */}
-      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px', gap: '20px' }}>
+    <div className={styles.pageContainer}>
+      {/* Cabecera con navegación dentro del contenedor principal */}
+      <div className={styles.header}>
         <button 
           onClick={() => navigate('/')} 
-          style={{ 
-            padding: '8px 16px', border: '2px solid #000', borderRadius: '20px', 
-            cursor: 'pointer', fontWeight: 'bold', background: 'none' 
-          }}
+          className={styles.backButton}
         >
           ← VOLVER
         </button>
-        <h1 style={{ margin: 0 }}>
+        <h1 className={styles.title}>
           Análisis Técnico: {busInfo.zona} 
-          <span style={{ fontSize: '0.6em', color: '#666', marginLeft: '10px' }}>(Bus {id})</span>
+          <span className={styles.busId}>(Bus {id})</span>
         </h1>
       </div>
 
-      {/* Bloque de KPIs */}
-      <div className={styles.kpiGrid}>
-        {kpis.map((kpi) => (
-          <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
-        ))}
-      </div>
+      {/* Contenedor principal: KPIs a la izquierda y Gráfica al 100% a la derecha */}
+      <div className={styles.mainContainer}>
+        {/* Columna de KPIs */}
+        <div className={styles.kpiColumn}>
+          {kpis.map((kpi) => (
+            <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
+          ))}
+        </div>
 
-      {/* Gráfico de Tendencia Multi-fase */}
-      <div style={{ marginTop: '30px', background: '#fff', padding: '10px', border: '1px solid #eee' }}>
-        <TrendChart 
-          data={busInfo.datosHorarios}
-          dataKeys={['v1', 'v2', 'v3']} // Representación de Fase 1, 2 y 3
-          colors={['#2196F3', '#4CAF50', '#9C27B0']} // Colores Fase 1, 2 y 3
-          selectedHour={selectedHour}
-          onSliderChange={setSelectedHour}
-          yAxisLabel="Tensión (p.u.)"
-          yAxisDomain={[0.90, 1.1]} // Margen para ver todas las líneas de corte
-          yAxisTicks={yAxisTicks}
-          horizontalGuides={voltageLimits}
-        />
+        {/* Columna de Gráfica */}
+        <div className={styles.chartColumn}>
+          <TrendChart 
+            data={busInfo.datosHorarios}
+            dataKeys={['v1', 'v2', 'v3']} // Representación de Fase 1, 2 y 3
+            colors={['#2196F3', '#4CAF50', '#9C27B0']} // Colores Fase 1, 2 y 3
+            selectedHour={selectedHour}
+            onSliderChange={setSelectedHour}
+            yAxisLabel="Tensión (p.u.)"
+            yAxisDomain={[0.92, 1.08]} // Margen para ver todas las líneas de corte
+            yAxisTicks={yAxisTicks}
+            horizontalGuides={voltageLimits}
+          />
+        </div>
       </div>
-      
     </div>
   );
 };

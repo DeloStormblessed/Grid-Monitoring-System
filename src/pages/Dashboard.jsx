@@ -70,24 +70,31 @@ const Dashboard = () => {
     ) : weather;
 
     // Renderizado dinámico del contenido de la tarjeta de estados
-const zonesDisplay = atRiskZones.length === 0 ? (
-      <span style={{ color: '#388e3c' }}>NOMINAL</span>
+    const dangerZones = atRiskZones.filter(z => z.priority === 1).length;
+    const warningZones = atRiskZones.filter(z => z.priority === 2).length;
+    
+    const zonesDisplay = atRiskZones.length === 0 ? (
+      <span style={{ color: '#388e3c', fontSize: '2.5rem', fontWeight: 'bold' }}>NOMINAL</span>
     ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '5px' }}>
-        {atRiskZones.slice(0, 4).map(z => (
-          <div key={z.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.75rem' }}>
-            <span style={{ 
-              width: '8px', height: '8px', borderRadius: '50%', 
-              backgroundColor: z.color, flexShrink: 0 
-            }}></span>
-            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {z.nombre} (Bus {z.id})
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {dangerZones > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#d32f2f', minWidth: '40px' }}>
+              {dangerZones}
+            </span>
+            <span style={{ fontSize: '1rem', color: '#d32f2f', fontWeight: '600', textTransform: 'uppercase' }}>
+              Peligro
             </span>
           </div>
-        ))}
-        {atRiskZones.length > 4 && (
-          <div style={{ fontSize: '0.7rem', fontStyle: 'italic', marginTop: '2px', opacity: 0.8 }}>
-            + {atRiskZones.length - 4} más buses en riesgo
+        )}
+        {warningZones > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#f57c00', minWidth: '40px' }}>
+              {warningZones}
+            </span>
+            <span style={{ fontSize: '1rem', color: '#f57c00', fontWeight: '600', textTransform: 'uppercase' }}>
+              Aviso
+            </span>
           </div>
         )}
       </div>
@@ -101,24 +108,41 @@ const zonesDisplay = atRiskZones.length === 0 ? (
     ];
   }, [currentData, weather, atRiskZones]);
 
+// src/pages/Dashboard.jsx
   return (
-    <div className={styles.dashboardContainer}>
-      <div className={styles.kpiGrid}>
-        {kpis.map((kpi) => (
-          <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
-        ))}
+    <div className={styles.pageContainer}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Curva de demanda: Modelo tipo</h1>
       </div>
 
-      <TrendChart 
-        title={`Curva de Demanda Total`}
-        data={systemData}
-        dataKey="demandaTotalKw"
-        selectedHour={selectedHour}
-        onSliderChange={setSelectedHour}
-        color="#000"  
-      />
+      <div className={styles.dashboardContainer}>
+        {/* Columna Izquierda: KPIs */}
+        <div className={styles.kpiColumn}>
+          {kpis.map((kpi) => (
+            <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
+          ))}
+        </div>
 
-      <ZonesTable selectedHour={selectedHour} />
+        <div className={styles.contentColumn}>
+          {/* Columna Central: Gráfico (65%) */}
+          <div className={styles.chartColumn}>
+            <TrendChart 
+              title={`Curva de Demanda Total`}
+              data={systemData}
+              dataKey="demandaTotalKw"
+              selectedHour={selectedHour}
+              onSliderChange={setSelectedHour}
+              color="#000"  
+              showLegend={false}
+            />
+          </div>
+
+          {/* Columna Derecha: Tabla (35%) */}
+          <div className={styles.tableColumn}>
+            <ZonesTable selectedHour={selectedHour} />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -94,9 +94,9 @@
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1024px) {
   .header {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
   }
   .navLinks {

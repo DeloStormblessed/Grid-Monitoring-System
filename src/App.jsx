@@ -9,7 +9,7 @@ import AnalisisZona from './pages/AnalisisZona';
 
 function App() {
   return (
-    <div>
+    <div className="appShell">
       <Navbar />
       
       <main className="container">

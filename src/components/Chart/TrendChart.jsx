@@ -17,7 +17,8 @@ const TrendChart = ({
   yAxisLabel = "Demanda (kW)", 
   yAxisDomain = ['auto', 'auto'], 
   yAxisTicks, // NUEVA PROPIEDAD: Para definir etiquetas exactas en el eje Y
-  horizontalGuides = [] 
+  horizontalGuides = [],
+  showLegend = true
 }) => {
 
   const initialKeys = dataKeys || [dataKey];
@@ -42,7 +43,7 @@ const TrendChart = ({
 
   return (
     <div className={styles.chartWrapper}>
-      <div style={{ width: '100%', height: 500, cursor: 'crosshair', transition: 'all 0.15s ease-out' }}>
+      <div style={{ width: '100%', height: '100%', minHeight: 260, cursor: 'crosshair', transition: 'all 0.15s ease-out' }}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 40, right: 30, left: 20, bottom: 40 }} onMouseMove={handleMouseMove}>
             <defs>
@@ -76,7 +77,7 @@ const TrendChart = ({
               <Label value={yAxisLabel} angle={-90} position="left" />
             </YAxis>
 
-            {activeKeysInfo.length > 0 && <Legend verticalAlign="top" height={36}/>}
+            {showLegend && activeKeysInfo.length > 0 && <Legend verticalAlign="top" height={36}/>}
 
             {horizontalGuides.map((guide, i) => (
               <ReferenceLine key={`guide-${i}`} y={guide.value} stroke={guide.color} strokeDasharray="4 4" />

@@ -17,6 +17,14 @@ body {
   -webkit-font-smoothing: antialiased; /* Para que las letras se vean más nítidas */
 }
 
+#root {
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+}
+
 /* 3. Variables para el futuro (Tarjeta 7) */
 :root {
   --border-thickness: 3px;
@@ -38,9 +46,20 @@ a {
 button {
   font-family: inherit;
 }
+
+.appShell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .container {
-  width: 90%; /* Deja un 5% de margen a cada lado en móviles */
-  max-width: 1200px; /* Evita que en pantallas gigantes el dashboard se estire demasiado */
+  width: 95%; /* Deja un 5% de margen a cada lado en móviles */
   margin: 0 auto; /* Centra horizontalmente el bloque */
-  padding: 20px 0; /* Margen superior e inferior para que el contenido no pegue al Navbar */
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  padding: 0 0 20px 0; /* Padding inferior solicitado */
 }
