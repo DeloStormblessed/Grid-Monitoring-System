@@ -1,0 +1,89 @@
+.tableContainer {
+  width: 100%;
+  overflow-x: auto;
+  border: var(--main-border, 3px solid #000);
+  background: #fff;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center; /* Centrado según tu wireframe */
+}
+
+.table th,
+.table td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  background-color: #f9f9f9;
+  border-bottom: 2px solid #000;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.zonaName {
+  font-weight: 600;
+}
+
+.busId {
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* Identificadores visuales de estados */
+.badge {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.peligro {
+  background-color: #ffebee;
+  color: #d32f2f;
+  border: 1px solid #d32f2f;
+}
+
+.aviso {
+  background-color: #fff3e0;
+  color: #f57c00;
+  border: 1px solid #f57c00;
+}
+
+.nominal {
+  background-color: #e8f5e9;
+  color: #388e3c;
+  border: 1px solid #388e3c;
+}
+
+/* Botón de Detalles */
+.actionCell {
+  text-align: right;
+}
+
+.detailsBtn {
+  background-color: transparent;
+  border: 2px solid #000;
+  color: #000;
+  padding: 6px 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 20px; /* Botón ligeramente redondeado como suele ser habitual en wireframes modernos */
+  transition: all 0.2s;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.detailsBtn:hover {
+  background-color: #000;
+  color: #fff;
+}

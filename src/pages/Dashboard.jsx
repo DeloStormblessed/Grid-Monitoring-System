@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
+import ZonesTable from '../components/ZonesTable/ZonesTable';
 import styles from './Dashboard.module.css';
 import systemData from '../mocks/system.json';
+import busesData from '../mocks/buses.json';
 
 const Dashboard = () => {
   const [selectedHour, setSelectedHour] = useState(0);
@@ -31,6 +33,32 @@ const Dashboard = () => {
     [selectedHour]
   );
 
+  // Lógica para calcular estados y filtrar solo los que están en riesgo (Aviso/Peligro)
+  const atRiskZones = useMemo(() => {
+    return Object.entries(busesData)
+      .map(([id, info]) => {
+        const hourData = info.datosHorarios.find(d => d.hora === selectedHour) || {};
+        const voltages = [hourData.v1, hourData.v2, hourData.v3].filter(v => v != null);
+        
+        let color = null;
+        let priority = 3; // 3: Nominal, 2: Aviso, 1: Peligro
+
+        voltages.forEach(v => {
+          if (v <= 0.94 || v >= 1.06) {
+            color = '#d32f2f'; // Rojo
+            priority = 1;
+          } else if ((v <= 0.96 || v >= 1.04) && priority > 1) {
+            color = '#f57c00'; // Naranja
+            priority = 2;
+          }
+        });
+
+        return { id, nombre: info.zona, color, priority };
+      })
+      .filter(z => z.priority < 3) // Solo nos quedamos con Peligro y Aviso
+      .sort((a, b) => a.priority - b.priority); // Ordenar de Rojo a Naranja
+  }, [selectedHour]);
+
   const kpis = useMemo(() => {
     const weatherParts = weather.split(' | ');
     const climaValue = weatherParts.length === 2 ? (
@@ -41,25 +69,45 @@ const Dashboard = () => {
       </>
     ) : weather;
 
+    // Renderizado dinámico del contenido de la tarjeta de estados
+const zonesDisplay = atRiskZones.length === 0 ? (
+      <span style={{ color: '#388e3c' }}>NOMINAL</span>
+    ) : (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '5px' }}>
+        {atRiskZones.slice(0, 4).map(z => (
+          <div key={z.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.75rem' }}>
+            <span style={{ 
+              width: '8px', height: '8px', borderRadius: '50%', 
+              backgroundColor: z.color, flexShrink: 0 
+            }}></span>
+            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {z.nombre} (Bus {z.id})
+            </span>
+          </div>
+        ))}
+        {atRiskZones.length > 4 && (
+          <div style={{ fontSize: '0.7rem', fontStyle: 'italic', marginTop: '2px', opacity: 0.8 }}>
+            + {atRiskZones.length - 4} más buses en riesgo
+          </div>
+        )}
+      </div>
+    );
+
     return [
       { id: 1, title: 'Demanda Total', value: `${parseFloat(currentData.demandaTotalKw.toFixed(1)).toLocaleString('es-ES')} kW` },
       { id: 2, title: 'Pérdidas Totales', value: `${parseFloat(currentData.perdidasKw.toFixed(1)).toLocaleString('es-ES')} kW` },
-      { id: 3, title: 'Zonas en Aviso', value: '0' },
+      { id: 3, title: 'Estado de Zonas', value: zonesDisplay },
       { id: 4, title: 'Clima (LPA)', value: climaValue }
     ];
-  }, [currentData, weather]);
-
-
+  }, [currentData, weather, atRiskZones]);
 
   return (
     <div className={styles.dashboardContainer}>
-      
       <div className={styles.kpiGrid}>
         {kpis.map((kpi) => (
           <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
         ))}
       </div>
-
 
       <TrendChart 
         title={`Curva de Demanda Total`}
@@ -69,6 +117,8 @@ const Dashboard = () => {
         onSliderChange={setSelectedHour}
         color="#000"  
       />
+
+      <ZonesTable selectedHour={selectedHour} />
     </div>
   );
 };
