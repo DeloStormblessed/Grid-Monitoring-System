@@ -62,41 +62,39 @@ const Dashboard = () => {
   const kpis = useMemo(() => {
     const weatherParts = weather.split(' | ');
     const climaValue = weatherParts.length === 2 ? (
-      <>
-        {weatherParts[0]}
-        <br />
-        {weatherParts[1]}
-      </>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05' }}>
+        <span>{weatherParts[0]}</span>
+        <span>{weatherParts[1]}</span>
+      </div>
     ) : weather;
 
     // Renderizado dinámico del contenido de la tarjeta de estados
     const dangerZones = atRiskZones.filter(z => z.priority === 1).length;
     const warningZones = atRiskZones.filter(z => z.priority === 2).length;
+    const zonesParts = [];
+
+    if (dangerZones > 0) {
+      zonesParts.push({ value: dangerZones, label: 'Peligro', color: '#d32f2f' });
+    }
+
+    if (warningZones > 0) {
+      zonesParts.push({ value: warningZones, label: 'Aviso', color: '#f57c00' });
+    }
     
     const zonesDisplay = atRiskZones.length === 0 ? (
       <span style={{ color: '#388e3c', fontSize: '2.5rem', fontWeight: 'bold' }}>NOMINAL</span>
     ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        {dangerZones > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#d32f2f', minWidth: '40px' }}>
-              {dangerZones}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05', alignItems: 'center' }}>
+        {zonesParts.map((zone) => (
+          <div key={zone.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', lineHeight: '1' }}>
+            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: zone.color, lineHeight: '1', minWidth: '40px' }}>
+              {zone.value}
             </span>
-            <span style={{ fontSize: '1rem', color: '#d32f2f', fontWeight: '600', textTransform: 'uppercase' }}>
-              Peligro
-            </span>
-          </div>
-        )}
-        {warningZones > 0 && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#f57c00', minWidth: '40px' }}>
-              {warningZones}
-            </span>
-            <span style={{ fontSize: '1rem', color: '#f57c00', fontWeight: '600', textTransform: 'uppercase' }}>
-              Aviso
+            <span style={{ fontSize: '1rem', color: zone.color, fontWeight: '600', textTransform: 'uppercase', lineHeight: '1' }}>
+              {zone.label}
             </span>
           </div>
-        )}
+        ))}
       </div>
     );
 

@@ -30,6 +30,7 @@
   flex: 1;
   gap: 0;
   overflow: hidden;
+  align-items: stretch;
 }
 
 .kpiColumn {
@@ -38,8 +39,10 @@
   grid-auto-rows: minmax(140px, 1fr);
   gap: 20px;
   width: 260px;
+  height: 100%;
+  min-height: 0;
   padding: 0 20px 0 0;
-  overflow-y: auto;
+  overflow: visible;
   background: #f9f9f9;
   border-right: 1px solid #e0e0e0;
   align-content: start;
@@ -96,7 +99,16 @@
 /* Desktop: Distribución Bento Box */
 @media (min-width: 1024px) {
   .kpiColumn {
-    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .kpiColumn > div {
+    flex: 1;
+    min-height: 0;
   }
 
   .chartColumn {
