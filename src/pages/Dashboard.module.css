@@ -1,109 +1,103 @@
 /* src/pages/Dashboard.module.css */
+
+/* ========== BASE (Mobile First) ========== */
 .pageContainer {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
-  overflow: hidden;
 }
 
 .header {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 10px;
+  gap: 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid #e0e0e0;
   background: #f9f9f9;
-  height: 50px;
   flex-shrink: 0;
 }
 
 .title {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
+/* Mobile: layout apilado vertical, contenido scrollable */
 .dashboardContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 1;
-  gap: 0;
-  overflow: hidden;
-  align-items: stretch;
+  gap: 10px;
+  min-height: 0;
 }
 
+/* Mobile: KPIs en grid 2x2 */
 .kpiColumn {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: minmax(140px, 1fr);
-  gap: 20px;
-  width: 260px;
-  height: 100%;
-  min-height: 0;
-  padding: 0 20px 0 0;
-  overflow: visible;
-  background: #f9f9f9;
-  border-right: 1px solid #e0e0e0;
-  align-content: start;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  flex-shrink: 0;
+  padding: 0;
 }
 
+/* Mobile: contentColumn stacks vertically */
 .contentColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   flex: 1;
   min-height: 0;
-  display: grid;
-  grid-template-rows: minmax(0, 65fr) minmax(0, 35fr);
-  gap: 20px;
-  overflow: hidden;
 }
 
+/* Mobile: gráfico con altura mínima */
 .chartColumn {
   background: #fff;
   border: 3px solid #000;
-  padding: 15px;
-  min-height: 0;
-  overflow: hidden;
+  padding: 10px;
+  min-height: 280px;
+  flex-shrink: 0;
 }
 
+/* Mobile: tabla con altura limitada y scroll */
 .tableColumn {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
+  min-height: 200px;
+  flex-shrink: 0;
 }
 
-/* Tablet */
+/* ========== TABLET (600px - 1023px) ========== */
 @media (min-width: 600px) and (max-width: 1023px) {
+  .header {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.3rem;
+  }
+
   .dashboardContainer {
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: row;
+    overflow: hidden;
+    gap: 0;
+    align-items: stretch;
   }
 
-  .kpiColumn {
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 0;
-    border-right: none;
-    overflow: visible;
-    background: #fff;
-  }
-
-  .contentColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding-left: 0;
-  }
-}
-
-/* Desktop: Distribución Bento Box */
-@media (min-width: 1024px) {
+  /* Tablet: KPIs en columna lateral estrecha */
   .kpiColumn {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 200px;
+    min-width: 200px;
     height: 100%;
     min-height: 0;
+    padding: 0 15px 0 0;
+    background: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
+    gap: 15px;
   }
 
   .kpiColumn > div {
@@ -111,38 +105,135 @@
     min-height: 0;
   }
 
+  /* Tablet: contenido principal */
+  .contentColumn {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 65fr) minmax(0, 35fr);
+    gap: 15px;
+    overflow: hidden;
+  }
+
   .chartColumn {
+    min-height: 0;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    overflow: hidden;
   }
 
   .tableColumn {
     min-height: 0;
+    overflow: hidden;
   }
 }
 
-/* Mobile */
-@media (max-width: 599px) {
+/* ========== DESKTOP (1024px+) ========== */
+@media (min-width: 1024px) {
+  .header {
+    padding: 10px;
+    height: 50px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
   .dashboardContainer {
+    flex-direction: row;
+    overflow: hidden;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  /* Desktop: KPIs en columna lateral */
+  .kpiColumn {
+    display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    width: 260px;
+    min-width: 260px;
+    height: 100%;
+    min-height: 0;
+    padding: 0 15px 0 0;
+    background: #f9f9f9;
+    border-right: 1px solid #e0e0e0;
     gap: 15px;
   }
 
-  .kpiColumn {
-    width: 100%;
-    grid-template-columns: repeat(2, 1fr);
+  .kpiColumn > div {
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Desktop: contenido dividido en chart (65%) + table (35%) */
+  .contentColumn {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-rows: minmax(0, 65fr) minmax(0, 35fr);
     gap: 15px;
-    padding: 0;
-    border-right: none;
+    overflow: hidden;
+  }
+
+  .chartColumn {
+    min-height: 0;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .tableColumn {
+    min-height: 0;
+    overflow: hidden;
+  }
+}
+
+/* ========== LANDSCAPE PHONE (short viewport) ========== */
+@media (max-height: 500px) and (orientation: landscape) {
+  .dashboardContainer {
+    flex-direction: column;
     overflow: visible;
-    background: #fff;
+    gap: 10px;
+  }
+
+  .kpiColumn {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    padding: 0;
+    background: transparent;
+    border-right: none;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .kpiColumn > div {
+    flex: none;
+    min-height: 0;
   }
 
   .contentColumn {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    padding-left: 0;
+    gap: 10px;
+    overflow: visible;
+  }
+
+  .chartColumn {
+    min-height: 280px;
+    padding: 10px;
+    overflow: visible;
+    flex-shrink: 0;
+  }
+
+  .tableColumn {
+    min-height: 200px;
+    overflow: visible;
+    flex-shrink: 0;
   }
 }

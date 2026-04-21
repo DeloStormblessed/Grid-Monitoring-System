@@ -82,18 +82,13 @@ const Dashboard = () => {
     }
     
     const zonesDisplay = atRiskZones.length === 0 ? (
-      <span style={{ color: '#388e3c', fontSize: '2.5rem', fontWeight: 'bold' }}>NOMINAL</span>
+      <span style={{ color: '#388e3c' }}>NOMINAL</span>
     ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05', alignItems: 'center' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05' }}>
         {zonesParts.map((zone) => (
-          <div key={zone.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', lineHeight: '1' }}>
-            <span style={{ fontSize: '2.5rem', fontWeight: 'bold', color: zone.color, lineHeight: '1', minWidth: '40px' }}>
-              {zone.value}
-            </span>
-            <span style={{ fontSize: '1rem', color: zone.color, fontWeight: '600', textTransform: 'uppercase', lineHeight: '1' }}>
-              {zone.label}
-            </span>
-          </div>
+          <span key={zone.label} style={{ color: zone.color }}>
+            {zone.value} {zone.label}
+          </span>
         ))}
       </div>
     );
@@ -132,6 +127,7 @@ const Dashboard = () => {
               onSliderChange={setSelectedHour}
               color="#000"  
               showLegend={false}
+              yAxisDecimals={0}
             />
           </div>
 

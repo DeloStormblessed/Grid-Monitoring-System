@@ -25,6 +25,9 @@
   font-size: 0.9rem;
   background-color: #f9f9f9;
   border-bottom: 2px solid #000;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .table tr:last-child td {
@@ -100,4 +103,38 @@
 .detailsBtn:hover {
   background-color: #000;
   color: #fff;
+}
+
+/* Mobile: tabla compacta, ocultar columnas secundarias */
+@media (max-width: 599px) {
+  .table th,
+  .table td {
+    padding: 6px 4px;
+    font-size: 0.75rem;
+  }
+
+  .table th {
+    font-size: 0.7rem;
+  }
+
+  .busId {
+    display: none;
+  }
+
+  .badge {
+    min-width: 60px;
+    min-height: 24px;
+    padding: 4px 8px;
+    font-size: 0.65rem;
+  }
+
+  .actionCell {
+    min-width: 70px;
+  }
+
+  .detailsBtn {
+    max-width: 70px;
+    min-height: 24px;
+    font-size: 0.65rem;
+  }
 }
