@@ -6,24 +6,42 @@
   justify-content: center; /* Centra el contenido verticalmente */
   align-items: center; /* Centra el contenido horizontalmente */
   text-align: center; /* Asegura que el texto interior esté centrado */
-  padding: 10px 5px;
-  min-height: 80px;
+  padding: 6px 3px;
+  min-height: 65px;
 }
 
 .title {
-  font-size: 0.7rem;
+  font-size: 0.6rem;
   color: #555;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.5px;
-  margin-bottom: 5px; /* Espacio limpio entre el título y el número */
+  letter-spacing: 0.3px;
+  margin-bottom: 3px; /* Espacio limpio entre el título y el número */
 }
 
 .value {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   font-weight: 900;
   color: #000;
   line-height: 1;
+}
+
+/* Wider phones (400px+) */
+@media (min-width: 400px) {
+  .card {
+    padding: 10px 5px;
+    min-height: 80px;
+  }
+
+  .title {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+  }
+
+  .value {
+    font-size: 1.4rem;
+  }
 }
 
 /* Tablet */
@@ -57,5 +75,22 @@
 
   .value {
     font-size: 2.1rem;
+  }
+}
+
+/* Landscape phone */
+@media (max-height: 500px) and (orientation: landscape) {
+  .card {
+    padding: 4px 2px;
+    height: 40px;
+  }
+
+  .title {
+    font-size: 0.55rem;
+    margin-bottom: 2px;
+  }
+
+  .value {
+    font-size: 0.95rem;
   }
 }

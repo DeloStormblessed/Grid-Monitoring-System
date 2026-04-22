@@ -61,8 +61,16 @@ button {
   flex: 1;
   min-height: 0;
   display: flex;
-  padding: 15px;
+  padding: 8px;
   padding-top: 0;
+}
+
+/* Small phones (400px+): slightly more padding */
+@media (min-width: 400px) {
+  .container {
+    padding: 15px;
+    padding-top: 0;
+  }
 }
 
 /* Tablet y Desktop: bloquear scroll, todo en una pantalla */

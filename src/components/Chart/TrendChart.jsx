@@ -63,7 +63,7 @@ const TrendChart = ({
 
   return (
     <div className={styles.chartWrapper} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-      <div style={{ width: '100%', height: '100%', minHeight: 260, cursor: 'crosshair', transition: 'all 0.15s ease-out' }}>
+      <div style={{ width: '100%', height: '100%', minHeight: 180, cursor: 'crosshair', transition: 'all 0.15s ease-out' }}>
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
           <AreaChart data={data} margin={{ top: 40, right: 30, left: 20, bottom: 40 }} onClick={handleClick} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
             <defs>

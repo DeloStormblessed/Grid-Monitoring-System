@@ -62,8 +62,9 @@ const Dashboard = () => {
   const kpis = useMemo(() => {
     const weatherParts = weather.split(' | ');
     const climaValue = weatherParts.length === 2 ? (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05' }}>
+      <div className={styles.multiLineKpi}>
         <span>{weatherParts[0]}</span>
+        <span className={styles.separator}>|</span>
         <span>{weatherParts[1]}</span>
       </div>
     ) : weather;
@@ -84,11 +85,14 @@ const Dashboard = () => {
     const zonesDisplay = atRiskZones.length === 0 ? (
       <span style={{ color: '#388e3c' }}>NOMINAL</span>
     ) : (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', lineHeight: '1.05' }}>
-        {zonesParts.map((zone) => (
-          <span key={zone.label} style={{ color: zone.color }}>
-            {zone.value} {zone.label}
-          </span>
+      <div className={styles.multiLineKpi}>
+        {zonesParts.map((zone, index) => (
+          <React.Fragment key={zone.label}>
+            {index > 0 && <span className={styles.separator}>|</span>}
+            <span style={{ color: zone.color }}>
+              {zone.value} {zone.label}
+            </span>
+          </React.Fragment>
         ))}
       </div>
     );

@@ -118,6 +118,7 @@ const AnalisisZona = () => {
             yAxisLabel="Tensión (p.u.)"
             yAxisDomain={[0.92, 1.08]} // Margen para ver todas las líneas de corte
             yAxisTicks={yAxisTicks}
+            yAxisDecimals={2}
             horizontalGuides={voltageLimits}
           />
         </div>
