@@ -1,20 +1,71 @@
-/* 1. Reset total y Box Sizing */
+/* ============================================
+   GRID MONITORING SYSTEM — Industrial Theme
+   ============================================ */
+
+/* Google Fonts: Roboto (tipografía industrial / técnica) */
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;900&display=swap");
+
+/* 1. Paleta de colores industrial */
+:root {
+  /* Fondos */
+  --ind-bg: #eef0f4; /* Fondo general (gris industrial claro) */
+  --ind-surface: #ffffff; /* Paneles, tarjetas, tablas */
+  --ind-surface-alt: #f5f6f8; /* Sidebar KPIs, table header */
+  --ind-header: #1b2a3d; /* Navbar (oscuro tipo SCADA) */
+
+  /* Bordes */
+  --ind-border: #d0d4da;
+  --ind-border-strong: #b0b6c0;
+
+  /* Acentos */
+  --ind-primary: #009999; /* Teal industrial */
+  --ind-primary-light: #00b8b8; /* Hover */
+  --ind-primary-dark: #007a7a;
+
+  /* Texto */
+  --ind-text: #1e2a38; /* Texto principal */
+  --ind-text-muted: #6b7280; /* Labels, subtítulos */
+  --ind-text-on-dark: #e8eaed; /* Texto sobre fondo oscuro (navbar) */
+
+  /* Estados */
+  --ind-danger: #f23e2e;
+  --ind-danger-bg: #fdeaea;
+  --ind-warning: #f2b705;
+  --ind-warning-bg: #fff3e0;
+  --ind-success: #73bf26;
+  --ind-success-bg: #e8f5e9;
+
+  /* Gráficos */
+  --ind-chart-line: #009999;
+
+  /* Sombras */
+  --ind-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --ind-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* Legacy (para compatibilidad) */
+  --border-thickness: 1px;
+  --main-border: var(--border-thickness) solid var(--ind-border);
+  --primary-bg: var(--ind-surface);
+}
+
+/* 2. Reset total y Box Sizing */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Fundamental para layouts precisos */
+  box-sizing: border-box;
 }
 
-/* 2. Configuración de la página */
+/* 3. Configuración de la página */
 html,
 body {
   width: 100%;
   height: 100%;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #ffffff;
-  color: #000000;
+  font-family: "Roboto", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--ind-bg);
+  color: var(--ind-text);
   line-height: 1.5;
-  -webkit-font-smoothing: antialiased; /* Para que las letras se vean más nítidas */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -25,13 +76,6 @@ body {
 body {
   overflow-x: hidden;
   overflow-y: auto;
-}
-
-/* 3. Variables para el futuro (Tarjeta 7) */
-:root {
-  --border-thickness: 3px;
-  --main-border: var(--border-thickness) solid #000;
-  --primary-bg: #ffffff;
 }
 
 /* 4. Limpieza de elementos comunes */
@@ -49,7 +93,7 @@ button {
   font-family: inherit;
 }
 
-/* Mobile first: layout base apilado */
+/* 5. Layout shell */
 .appShell {
   min-height: 100%;
   display: flex;
@@ -61,15 +105,14 @@ button {
   flex: 1;
   min-height: 0;
   display: flex;
-  padding: 8px;
-  padding-top: 0;
+  padding: 10px;
+  padding-top: 10px;
 }
 
-/* Small phones (400px+): slightly more padding */
+/* Small phones (400px+) */
 @media (min-width: 400px) {
   .container {
     padding: 15px;
-    padding-top: 0;
   }
 }
 
@@ -87,7 +130,6 @@ button {
   .container {
     overflow: hidden;
     padding: 15px;
-    padding-top: 0;
   }
 }
 

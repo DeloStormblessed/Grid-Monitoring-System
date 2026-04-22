@@ -61,11 +61,14 @@ const TrendChart = ({
     isDragging.current = false;
   };
 
+  // Márgenes simplificados y estables para evitar warnings de dimensiones negativas
+  const STABLE_MARGINS = { top: 35, right: 20, left: 18, bottom: 35 };
+
   return (
     <div className={styles.chartWrapper} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
-      <div style={{ width: '100%', height: '100%', minHeight: 180, cursor: 'crosshair', transition: 'all 0.15s ease-out' }}>
+      <div className={styles.chartInnerContainer}>
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-          <AreaChart data={data} margin={{ top: 40, right: 30, left: 20, bottom: 40 }} onClick={handleClick} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
+          <AreaChart data={data} margin={STABLE_MARGINS} onClick={handleClick} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
             <defs>
               {activeKeysInfo.map((info) => (
                 <linearGradient key={`grad-${info.key}`} id={`colorGradient-${info.key}`} x1="0" y1="0" x2="0" y2="1">
@@ -75,35 +78,41 @@ const TrendChart = ({
               ))}
             </defs>
 
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#eee" />
+            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#d0d4da" />
 
             <XAxis
               dataKey="hora"
-              stroke="#000"
+              stroke="#6b7280"
               type="number"
               domain={[0, 23]}
               ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]}
             >
-              <Label value="Tiempo (h)" position="bottom" />
+              <Label value="Tiempo (h)" position="bottom" offset={5} dx={-75} />
             </XAxis>
 
             <YAxis
-              stroke="#000"
+              stroke="#6b7280"
               domain={yAxisDomain}
               ticks={yAxisTicks} // Aplicamos los ticks personalizados
               // Formateamos para que use comas como pediste (ej: 0,94)
               tickFormatter={(val) => val.toLocaleString('es-ES', { minimumFractionDigits: yAxisDecimals, maximumFractionDigits: yAxisDecimals })}
             >
-              <Label value={yAxisLabel} angle={-90} position="left" />
+              <Label value={yAxisLabel} angle={-90} position="left" offset={0} dy={0} />
             </YAxis>
 
-            {showLegend && activeKeysInfo.length > 0 && <Legend verticalAlign="top" height={36} />}
+            {showLegend && activeKeysInfo.length > 0 && (
+              <Legend 
+                verticalAlign="top" 
+                align="center" 
+                height={36}
+              />
+            )}
 
             {horizontalGuides.map((guide, i) => (
               <ReferenceLine key={`guide-${i}`} y={guide.value} stroke={guide.color} strokeDasharray="4 4" />
             ))}
 
-            <ReferenceLine x={selectedHour} stroke="#666" strokeWidth={2} strokeDasharray="5 5" />
+            <ReferenceLine x={selectedHour} stroke="#009999" strokeWidth={2} strokeDasharray="5 5" />
 
             {activeKeysInfo.map((info) => (
               <Area

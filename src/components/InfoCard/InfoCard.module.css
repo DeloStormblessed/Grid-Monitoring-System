@@ -1,28 +1,30 @@
 .card {
-  border: var(--main-border, 3px solid #000);
-  background-color: #fff;
+  border: 1px solid var(--ind-border);
+  border-top: 3px solid var(--ind-primary);
+  background-color: var(--ind-surface);
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centra el contenido verticalmente */
-  align-items: center; /* Centra el contenido horizontalmente */
-  text-align: center; /* Asegura que el texto interior esté centrado */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   padding: 6px 3px;
   min-height: 65px;
 }
 
+
 .title {
   font-size: 0.6rem;
-  color: #555;
+  color: var(--ind-text-muted);
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.3px;
-  margin-bottom: 3px; /* Espacio limpio entre el título y el número */
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
 }
 
 .value {
   font-size: 1.1rem;
   font-weight: 900;
-  color: #000;
+  color: var(--ind-text);
   line-height: 1;
 }
 

@@ -1,63 +1,52 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
+import { ApiContext } from '../context/ApiContext';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import ZonesTable from '../components/ZonesTable/ZonesTable';
 import styles from './Dashboard.module.css';
-import systemData from '../mocks/system.json';
-import busesData from '../mocks/buses.json';
 
 const Dashboard = () => {
-  const [selectedHour, setSelectedHour] = useState(0);
-  const [weather, setWeather] = useState('Cargando...');
+  const { 
+    systemData, 
+    busesData, 
+    isLoading, 
+    error, 
+    selectedHour, 
+    setSelectedHour, 
+    weather 
+  } = useContext(ApiContext);
 
-  useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=28.12&longitude=-15.43&current_weather=true');
-        if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
-        const data = await response.json();
-        if (data && data.current_weather) {
-          const temp = data.current_weather.temperature.toString().replace('.', ',');
-          const windspeed = data.current_weather.windspeed.toString().replace('.', ',');
-          setWeather(`${temp}°C | ${windspeed} km/h`);
-        }
-      } catch (error) {
-        setWeather('Error API');
-      }
-    };
-    fetchWeather();
-  }, []);
+  // Declarar TODOS los hooks primero (antes de cualquier return condicional)
+  const currentData = useMemo(() => {
+    if (!systemData || systemData.length === 0) return null;
+    return systemData.find(item => item.hora === selectedHour) || systemData[0];
+  }, [systemData, selectedHour]);
 
-  const currentData = useMemo(() => 
-    systemData.find(item => item.hora === selectedHour) || systemData[0],
-    [selectedHour]
-  );
-
-  // Lógica para calcular estados y filtrar solo los que están en riesgo (Aviso/Peligro)
   const atRiskZones = useMemo(() => {
+    if (!busesData) return [];
     return Object.entries(busesData)
       .map(([id, info]) => {
         const hourData = info.datosHorarios.find(d => d.hora === selectedHour) || {};
         const voltages = [hourData.v1, hourData.v2, hourData.v3].filter(v => v != null);
         
-        let color = null;
-        let priority = 3; // 3: Nominal, 2: Aviso, 1: Peligro
+        let colorClass = null;
+        let priority = 3;
 
         voltages.forEach(v => {
           if (v <= 0.94 || v >= 1.06) {
-            color = '#d32f2f'; // Rojo
+            colorClass = styles.statusDanger;
             priority = 1;
           } else if ((v <= 0.96 || v >= 1.04) && priority > 1) {
-            color = '#f57c00'; // Naranja
+            colorClass = styles.statusWarning;
             priority = 2;
           }
         });
 
-        return { id, nombre: info.zona, color, priority };
+        return { id, nombre: info.zona, colorClass, priority };
       })
-      .filter(z => z.priority < 3) // Solo nos quedamos con Peligro y Aviso
-      .sort((a, b) => a.priority - b.priority); // Ordenar de Rojo a Naranja
-  }, [selectedHour]);
+      .filter(z => z.priority < 3)
+      .sort((a, b) => a.priority - b.priority);
+  }, [busesData, selectedHour]);
 
   const kpis = useMemo(() => {
     const weatherParts = weather.split(' | ');
@@ -69,27 +58,33 @@ const Dashboard = () => {
       </div>
     ) : weather;
 
-    // Renderizado dinámico del contenido de la tarjeta de estados
     const dangerZones = atRiskZones.filter(z => z.priority === 1).length;
     const warningZones = atRiskZones.filter(z => z.priority === 2).length;
     const zonesParts = [];
 
+    let zoneStatus = 'nominal';
     if (dangerZones > 0) {
-      zonesParts.push({ value: dangerZones, label: 'Peligro', color: '#d32f2f' });
+      zoneStatus = 'danger';
+    } else if (warningZones > 0) {
+      zoneStatus = 'warning';
+    }
+
+    if (dangerZones > 0) {
+      zonesParts.push({ value: dangerZones, label: 'Peligro', colorClass: styles.statusDanger });
     }
 
     if (warningZones > 0) {
-      zonesParts.push({ value: warningZones, label: 'Aviso', color: '#f57c00' });
+      zonesParts.push({ value: warningZones, label: 'Aviso', colorClass: styles.statusWarning });
     }
     
     const zonesDisplay = atRiskZones.length === 0 ? (
-      <span style={{ color: '#388e3c' }}>NOMINAL</span>
+      <span className={styles.statusNominal}>NOMINAL</span>
     ) : (
       <div className={styles.multiLineKpi}>
         {zonesParts.map((zone, index) => (
           <React.Fragment key={zone.label}>
             {index > 0 && <span className={styles.separator}>|</span>}
-            <span style={{ color: zone.color }}>
+            <span className={zone.colorClass}>
               {zone.value} {zone.label}
             </span>
           </React.Fragment>
@@ -97,13 +92,43 @@ const Dashboard = () => {
       </div>
     );
 
+    if (!currentData) {
+      return [
+        { id: 1, title: 'Estado de Zonas', value: zonesDisplay, status: zoneStatus },
+        { id: 2, title: 'Demanda Total', value: '--' },
+        { id: 3, title: 'Pérdidas Totales', value: '--' },
+        { id: 4, title: 'Clima (LPA)', value: climaValue }
+      ];
+    }
+
     return [
-      { id: 1, title: 'Demanda Total', value: `${parseFloat(currentData.demandaTotalKw.toFixed(1)).toLocaleString('es-ES')} kW` },
-      { id: 2, title: 'Pérdidas Totales', value: `${parseFloat(currentData.perdidasKw.toFixed(1)).toLocaleString('es-ES')} kW` },
-      { id: 3, title: 'Estado de Zonas', value: zonesDisplay },
+      { id: 1, title: 'Estado de Zonas', value: zonesDisplay, status: zoneStatus },
+      { id: 2, title: 'Demanda Total', value: `${parseFloat(currentData.demandaTotalKw.toFixed(1)).toLocaleString('es-ES')} kW` },
+      { id: 3, title: 'Pérdidas Totales', value: `${parseFloat(currentData.perdidasKw.toFixed(1)).toLocaleString('es-ES')} kW` },
       { id: 4, title: 'Clima (LPA)', value: climaValue }
     ];
   }, [currentData, weather, atRiskZones]);
+
+  // AHORA se pueden hacer los early returns
+  if (isLoading) {
+    return (
+      <div className={styles.pageContainer}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Cargando datos de la red...</h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.pageContainer}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Error: {error}</h1>
+        </div>
+      </div>
+    );
+  }
 
 // src/pages/Dashboard.jsx
   return (
@@ -116,7 +141,12 @@ const Dashboard = () => {
         {/* Columna Izquierda: KPIs */}
         <div className={styles.kpiColumn}>
           {kpis.map((kpi) => (
-            <InfoCard key={kpi.id} title={kpi.title} value={kpi.value} />
+            <InfoCard 
+              key={kpi.id} 
+              title={kpi.title} 
+              value={kpi.value}
+              className={`${kpi.status ? styles[`glow${kpi.status.charAt(0).toUpperCase()}${kpi.status.slice(1)}`] : ''} ${kpi.title === 'Estado de Zonas' ? styles.noBorder : ''}`}
+            />
           ))}
         </div>
 
@@ -129,7 +159,7 @@ const Dashboard = () => {
               dataKey="demandaTotalKw"
               selectedHour={selectedHour}
               onSliderChange={setSelectedHour}
-              color="#000"  
+              color="#009999"  
               showLegend={false}
               yAxisDecimals={0}
             />

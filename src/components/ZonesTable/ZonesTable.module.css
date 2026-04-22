@@ -3,31 +3,43 @@
   height: 100%;
   min-height: 0;
   overflow: auto;
-  border: var(--main-border, 3px solid #000);
-  background: #fff;
+  border: 1px solid var(--ind-border);
+  border-top: 3px solid var(--ind-primary);
+  background: var(--ind-surface);
+  box-shadow: var(--ind-shadow);
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  text-align: center; /* Centrado según tu wireframe */
+  text-align: center;
 }
 
 .table th,
 .table td {
   padding: 7px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid var(--ind-border);
 }
 
 .table th {
   font-weight: 700;
   text-transform: uppercase;
-  font-size: 0.9rem;
-  background-color: #f9f9f9;
-  border-bottom: 2px solid #000;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  background-color: var(--ind-surface-alt);
+  color: var(--ind-text-muted);
+  border-bottom: 2px solid var(--ind-border-strong);
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.table tbody tr {
+  transition: background-color 0.15s ease;
+}
+
+.table tbody tr:hover {
+  background-color: var(--ind-surface-alt);
 }
 
 .table tr:last-child td {
@@ -36,11 +48,12 @@
 
 .zonaName {
   font-weight: 600;
+  color: var(--ind-text);
 }
 
 .busId {
   font-size: 0.8rem;
-  color: #555;
+  color: var(--ind-text-muted);
   margin-left: 8px;
 }
 
@@ -49,8 +62,6 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 86px;
-  min-height: 28px;
   padding: 6px 12px;
   border-radius: 4px;
   font-weight: 700;
@@ -60,21 +71,21 @@
 }
 
 .peligro {
-  background-color: #ffebee;
-  color: #d32f2f;
-  border: 1px solid #d32f2f;
+  background-color: var(--ind-danger-bg);
+  color: var(--ind-danger);
+  border: 1px solid var(--ind-danger);
 }
 
 .aviso {
-  background-color: #fff3e0;
-  color: #f57c00;
-  border: 1px solid #f57c00;
+  background-color: var(--ind-warning-bg);
+  color: var(--ind-warning);
+  border: 1px solid var(--ind-warning);
 }
 
 .nominal {
-  background-color: #e8f5e9;
-  color: #388e3c;
-  border: 1px solid #388e3c;
+  background-color: var(--ind-success-bg);
+  color: var(--ind-success);
+  border: 1px solid var(--ind-success);
 }
 
 /* Botón de Detalles */
@@ -86,23 +97,57 @@
 
 .detailsBtn {
   background-color: transparent;
-  border: 2px solid #000;
-  color: #000;
+  border: 2px solid var(--ind-primary);
+  color: var(--ind-primary);
   padding: 0;
   width: 100%;
   max-width: 90px;
   min-height: 28px;
   font-weight: 600;
   cursor: pointer;
-  border-radius: 20px; /* Botón ligeramente redondeado como suele ser habitual en wireframes modernos */
-  transition: all 0.2s;
+  border-radius: 20px;
+  transition: all 0.2s ease;
   text-transform: uppercase;
   font-size: 0.8rem;
 }
 
 .detailsBtn:hover {
-  background-color: #000;
+  background-color: var(--ind-primary);
   color: #fff;
+}
+
+/* Tablet: ajustar tamaño para evitar roturas entre 600 y 1024px */
+@media (max-width: 1023px) {
+  .table th,
+  .table td {
+    padding: 6px 5px;
+    font-size: 0.85rem;
+  }
+
+  .table th {
+    font-size: 0.8rem;
+  }
+
+  .busId {
+    display: block;
+    margin-left: 0;
+    margin-top: 2px;
+  }
+
+  .badge {
+    min-width: 75px;
+    padding: 5px 8px;
+    font-size: 0.75rem;
+  }
+
+  .actionCell {
+    min-width: 85px;
+  }
+
+  .detailsBtn {
+    max-width: 80px;
+    font-size: 0.75rem;
+  }
 }
 
 /* Mobile: tabla compacta, ocultar columnas secundarias */

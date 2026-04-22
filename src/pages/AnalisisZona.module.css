@@ -13,37 +13,49 @@
   align-items: center;
   gap: 10px;
   padding: 8px 10px;
-  border-bottom: 1px solid #e0e0e0;
-  background: #f9f9f9;
+  background: var(--ind-surface);
   flex-shrink: 0;
+  box-shadow: var(--ind-shadow);
 }
 
 .backButton {
   padding: 6px 12px;
-  border: 2px solid #000;
+  border: 2px solid var(--ind-primary);
   border-radius: 20px;
   cursor: pointer;
   font-weight: bold;
   background: none;
   font-size: 0.85rem;
+  color: var(--ind-primary);
   transition: all 0.3s ease;
   flex-shrink: 0;
 }
 
 .backButton:hover {
-  background-color: #f0f0f0;
+  background-color: var(--ind-primary);
+  color: #fff;
 }
 
 .title {
   margin: 0;
   font-size: 1.1rem;
   font-weight: 600;
+  color: var(--ind-text);
 }
 
 .busId {
   font-size: 0.6em;
-  color: #666;
+  color: var(--ind-text-muted);
   margin-left: 10px;
+}
+
+.notFoundTitle {
+  margin: 0;
+  color: var(--ind-text);
+}
+
+.notFoundContainer {
+  padding: 20px;
 }
 
 /* Mobile: layout apilado */
@@ -70,9 +82,11 @@
   display: flex;
   flex-direction: column;
   padding: 5px;
-  background: #fff;
-  border: 3px solid #000;
+  background: var(--ind-surface);
+  border: 1px solid var(--ind-border);
+  border-top: 3px solid var(--ind-primary);
   min-height: 250px;
+  box-shadow: var(--ind-shadow);
 }
 
 /* Wider phones (400px+) */
@@ -117,8 +131,8 @@
     height: 100%;
     min-height: 0;
     padding: 0 15px 0 0;
-    background: #f9f9f9;
-    border-right: 1px solid #e0e0e0;
+    background: var(--ind-surface-alt);
+    border-right: 1px solid var(--ind-border);
     gap: 15px;
   }
 
@@ -162,8 +176,7 @@
     height: 100%;
     min-height: 0;
     padding: 0 15px 0 0;
-    background: #f9f9f9;
-    border-right: 1px solid #e0e0e0;
+    background: var(--ind-surface-alt);
     gap: 15px;
   }
 

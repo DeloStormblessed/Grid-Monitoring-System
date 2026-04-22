@@ -1,34 +1,37 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import busesData from '../../mocks/buses.json';
+import { ApiContext } from '../../context/ApiContext';
 import styles from './ZonesTable.module.css';
 
 // Función auxiliar para determinar el estado según el voltaje
 const getVoltageState = (voltage) => {
   if (voltage === null || voltage === undefined) return { state: 'Desconocido', color: 'gray', priority: 4 };
-  
+
   // Basado en el wireframe, < 0.94 o > 1.06 están en las zonas rojas del medidor
   if (voltage <= 0.94 || voltage >= 1.06) return { state: 'Peligro', styleClass: 'peligro', priority: 1 };
   if (voltage <= 0.96 || voltage >= 1.04) return { state: 'Aviso', styleClass: 'aviso', priority: 2 };
-  
+
   return { state: 'Nominal', styleClass: 'nominal', priority: 3 };
 };
 
 const ZonesTable = ({ selectedHour }) => {
   const navigate = useNavigate();
+  const { busesData } = useContext(ApiContext);
 
   const tableData = useMemo(() => {
+    if (!busesData) return [];
+
     const data = [];
-    
+
     // Recorremos los buses (zonas) que nos llegan del JSON
     Object.entries(busesData).forEach(([busId, busInfo]) => {
       const hourData = busInfo.datosHorarios.find((d) => d.hora === selectedHour) || {};
-      
+
       // Analizamos las fases (v1=A, v2=B, v3=C) para encontrar el peor caso
       const phases = [
-          { name: '1', value: hourData.v1 },
-          { name: '2', value: hourData.v2 },
-          { name: '3', value: hourData.v3 }
+        { name: '1', value: hourData.v1 },
+        { name: '2', value: hourData.v2 },
+        { name: '3', value: hourData.v3 }
       ];
 
       let worstState = { state: 'Nominal', styleClass: 'nominal', priority: 3 };
@@ -36,23 +39,23 @@ const ZonesTable = ({ selectedHour }) => {
       let worstPhase = '';
 
       phases.forEach(phase => {
-          if(phase.value !== null && phase.value !== undefined) {
-              const stateInfo = getVoltageState(phase.value);
-              if (stateInfo.priority < worstState.priority) {
-                  worstState = stateInfo;
-                  worstVoltage = phase.value;
-                  worstPhase = phase.name;
-              }
+        if (phase.value !== null && phase.value !== undefined) {
+          const stateInfo = getVoltageState(phase.value);
+          if (stateInfo.priority < worstState.priority) {
+            worstState = stateInfo;
+            worstVoltage = phase.value;
+            worstPhase = phase.name;
           }
+        }
       });
 
       // Si todo está correcto, tomamos la fase A por defecto para mostrar
       if (worstState.priority === 3) {
-         const firstValidPhase = phases.find(p => p.value !== null);
-         if (firstValidPhase) {
-            worstVoltage = firstValidPhase.value;
-            worstPhase = firstValidPhase.name;
-         }
+        const firstValidPhase = phases.find(p => p.value !== null);
+        if (firstValidPhase) {
+          worstVoltage = firstValidPhase.value;
+          worstPhase = firstValidPhase.name;
+        }
       }
 
       data.push({
@@ -77,7 +80,7 @@ const ZonesTable = ({ selectedHour }) => {
         <thead>
           <tr>
             <th>Zona</th>
-            <th>Nivel de tensión</th>
+            <th>Tensión</th>
             <th>Demanda</th>
             <th>Estado</th>
             <th></th>
@@ -98,8 +101,8 @@ const ZonesTable = ({ selectedHour }) => {
                 </span>
               </td>
               <td className={styles.actionCell}>
-                <button 
-                  className={styles.detailsBtn} 
+                <button
+                  className={styles.detailsBtn}
                   onClick={() => navigate(`/zonas/${row.id}`)}
                 >
                   Detalles
