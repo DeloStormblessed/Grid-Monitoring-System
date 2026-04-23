@@ -3,6 +3,7 @@ import { useGridData } from '../hooks/hook';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import ZonesTable from '../components/ZonesTable/ZonesTable';
+import HourSlider from '../components/HourSlider/HourSlider';
 import styles from './Zonas.module.css';
 
 const Zonas = () => {
@@ -127,8 +128,13 @@ const Zonas = () => {
             />
           ))}
         </div>
+        
 
           <div className={styles.tableColumn}>
+      <HourSlider 
+        selectedHour={selectedHour}
+        onHourChange={setSelectedHour}
+      />
             <ZonesTable selectedHour={selectedHour} />
           </div>
       </div>

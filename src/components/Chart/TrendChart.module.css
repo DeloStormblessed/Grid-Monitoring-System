@@ -69,6 +69,7 @@
   .chartWrapper {
     -webkit-user-select: none;
     user-select: none;
+    touch-action: pan-y;
   }
 
   .chartTitle {

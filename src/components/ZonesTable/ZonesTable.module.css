@@ -13,6 +13,7 @@
   width: 100%;
   border-collapse: collapse;
   text-align: center;
+  table-layout: fixed;
 }
 
 .table th,
@@ -40,10 +41,6 @@
 
 .table tbody tr:hover {
   background-color: var(--ind-surface-alt);
-}
-
-.table tr:last-child td {
-  border-bottom: none;
 }
 
 .zonaName {

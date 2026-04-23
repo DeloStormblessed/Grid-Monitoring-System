@@ -16,8 +16,8 @@ const TrendChart = ({
   onSliderChange,
   yAxisLabel = "Demanda (kW)",
   yAxisDomain = ['auto', 'auto'],
-  yAxisTicks, // NUEVA PROPIEDAD: Para definir etiquetas exactas en el eje Y
-  yAxisDecimals = 0, // Número de decimales en el eje Y
+  yAxisTicks,
+  yAxisDecimals = 0,
   horizontalGuides = [],
   showLegend = true
 }) => {
@@ -61,14 +61,29 @@ const TrendChart = ({
     isDragging.current = false;
   };
 
-  // Márgenes simplificados y estables para evitar warnings de dimensiones negativas
   const STABLE_MARGINS = { top: 20, right: 20, left: 45, bottom: 20 };
 
   return (
-    <div className={styles.chartWrapper} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>
+    <div 
+      className={styles.chartWrapper} 
+      onMouseUp={handleMouseUp} 
+      onMouseLeave={handleMouseUp}
+      /* --- NUEVOS EVENTOS TÁCTILES --- */
+      onTouchEnd={handleMouseUp}
+      onTouchCancel={handleMouseUp}
+    >
       <div className={styles.chartInnerContainer}>
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-          <AreaChart data={data} margin={STABLE_MARGINS} onClick={handleClick} onMouseDown={handleMouseDown} onMouseMove={handleMouseMove}>
+          <AreaChart 
+            data={data} 
+            margin={STABLE_MARGINS} 
+            onClick={handleClick} 
+            onMouseDown={handleMouseDown} 
+            onMouseMove={handleMouseMove}
+            /* --- NUEVOS EVENTOS TÁCTILES --- */
+            onTouchStart={handleMouseDown}
+            onTouchMove={handleMouseMove}
+          >
             <defs>
               {activeKeysInfo.map((info) => (
                 <linearGradient key={`grad-${info.key}`} id={`colorGradient-${info.key}`} x1="0" y1="0" x2="0" y2="1">
@@ -93,8 +108,7 @@ const TrendChart = ({
             <YAxis
               stroke="#6b7280"
               domain={yAxisDomain}
-              ticks={yAxisTicks} // Aplicamos los ticks personalizados
-              // Formateamos para que use comas como pediste (ej: 0,94)
+              ticks={yAxisTicks}
               tickFormatter={(val) => val.toLocaleString('es-ES', { minimumFractionDigits: yAxisDecimals, maximumFractionDigits: yAxisDecimals })}
             >
               <Label value={yAxisLabel} angle={-90} position="left" offset={0} dy={0} />
