@@ -9,10 +9,10 @@ import styles from './AnalisisZona.module.css';
 const AnalisisZona = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { 
-    isLoading, 
-    error, 
-    selectedHour, 
+  const {
+    isLoading,
+    error,
+    selectedHour,
     setSelectedHour,
     busesData,
     getBusInfo,
@@ -85,14 +85,14 @@ const AnalisisZona = () => {
     <div className={styles.pageContainer}>
       {/* Cabecera con navegación dentro del contenedor principal */}
       <div className={styles.header}>
-        <button 
-          onClick={() => navigate('/')} 
+        <button
+          onClick={() => navigate('/')}
           className={styles.backButton}
         >
           ← VOLVER
         </button>
         <h1 className={styles.title}>
-          Análisis Técnico: {busInfo.zona} 
+          Análisis Técnico: {busInfo.zona}
           <span className={styles.busId}>(Bus {id})</span>
         </h1>
       </div>
@@ -104,18 +104,18 @@ const AnalisisZona = () => {
           <GaugeChart value={currentHourData.v1} title="Tensión Fase 1" noBorder={true} />
           <GaugeChart value={currentHourData.v2} title="Tensión Fase 2" noBorder={true} />
           <GaugeChart value={currentHourData.v3} title="Tensión Fase 3" noBorder={true} />
-          <InfoCard 
-            title="Consumo" 
+          <InfoCard
+            title="Consumo"
             value={currentHourData.cargaTotal !== null && currentHourData.cargaTotal !== undefined
               ? `${currentHourData.cargaTotal.toFixed(2)} kW`
               : '--'
-            } 
+            }
           />
         </div>
 
         {/* Columna de Gráfica */}
         <div className={styles.chartColumn}>
-          <TrendChart 
+          <TrendChart
             data={busInfo.datosHorarios}
             dataKeys={['v1', 'v2', 'v3']}
             colors={['#2196F3', '#4CAF50', '#9C27B0']}

@@ -27,7 +27,11 @@
   color: var(--ind-text);
   line-height: 1;
 }
-
+@media (max-width: 399px) {
+  .card {
+    height: 65px;
+  }
+}
 /* Wider phones (400px+) */
 @media (min-width: 400px) {
   .card {

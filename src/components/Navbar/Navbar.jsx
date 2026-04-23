@@ -30,7 +30,7 @@ return (
     <header className={styles.header}>
         {/*Bloque: logo*/}
         <div className={styles.logo}>
-            Grid Monitoring System
+            GMS
         </div>
 
         <div className={styles.rightGroups}>

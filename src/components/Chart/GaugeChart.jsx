@@ -40,7 +40,7 @@ const GaugeChart = ({ value, title, noBorder = false }) => {
   return (
     <div className={`${styles.gaugeCard} ${statusClass || ''} ${noBorderClass}`}>
       <p className={styles.title}>{title}</p>
-      
+
       <div className={styles.gaugeContent}>
         <div className={styles.chartContainer}>
           <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
