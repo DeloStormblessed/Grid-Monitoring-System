@@ -50,7 +50,7 @@ return (
             <ul className={styles.navLinks}>
               <li><Link to="/" onClick={() => setIsOpen(false)}>GENERAL</Link></li>
               <li><Link to="/" onClick={() => setIsOpen(false)}>LÍNEAS</Link></li>
-              <li><Link to="/" onClick={() => setIsOpen(false)}>ZONAS</Link></li>
+              <li><Link to="zonas" onClick={() => setIsOpen(false)}>ZONAS</Link></li>
               <li><Link to="/" onClick={() => setIsOpen(false)}>CARGAS</Link></li>
             </ul>
         </nav>

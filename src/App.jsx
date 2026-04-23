@@ -5,6 +5,7 @@ import Navbar from './components/Navbar/Navbar';
 
 import Dashboard from './pages/Dashboard';
 import AnalisisZona from './pages/AnalisisZona';
+import Zonas from './pages/Zonas';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/zonas/:id" element={<AnalisisZona />} />
+          <Route path="/zonas" element={<Zonas />} />
       </Routes>
       </main>
 
