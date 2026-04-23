@@ -13,7 +13,7 @@
 .chartInnerContainer {
   width: 100%;
   flex: 1;
-  min-height: 180px;
+  min-height: 0;
   cursor: crosshair;
   transition: all 0.15s ease-out;
   display: flex;
@@ -52,14 +52,18 @@
 }
 
 /* Centrar la leyenda con position absolute (Recharts la renderiza así con inline styles) */
-:global(.recharts-legend-wrapper) {
-  position: absolute !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: auto !important;
-  right: auto !important;
+
+/* Mostrar la lista en fila */
+:global(.recharts-legend-wrapper ul) {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
 
+/* Centrar solo los textos de la leyenda */
+:global(.recharts-legend-wrapper) text {
+  text-anchor: middle;
+}
 /* Optimización para dispositivos táctiles */
 @media (hover: none) and (pointer: coarse) {
   .chartWrapper {

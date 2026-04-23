@@ -8,9 +8,9 @@
   align-items: center;
   text-align: center;
   padding: 6px 3px;
-  min-height: 65px;
+  height: 65px;
+  overflow: hidden;
 }
-
 
 .title {
   font-size: 0.6rem;
@@ -32,7 +32,7 @@
 @media (min-width: 400px) {
   .card {
     padding: 10px 5px;
-    min-height: 80px;
+    height: 80px;
   }
 
   .title {

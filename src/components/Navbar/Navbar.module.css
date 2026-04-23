@@ -5,20 +5,13 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background-color: var(--ind-header);
-  padding: 8px 12px;
+  padding: 10px 15px;
   position: sticky;
   top: 0;
   z-index: 1000;
   flex-shrink: 0;
-}
-
-@media (min-width: 400px) {
-  .header {
-    padding: 10px 15px;
-    gap: 10px;
-  }
 }
 
 .rightGroups {
@@ -53,7 +46,7 @@
 }
 
 .navLinks a::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
@@ -77,6 +70,24 @@
 .admin {
   display: flex;
   color: var(--ind-text-on-dark);
+}
+
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--ind-text-on-dark);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+  position: relative;
+  z-index: 1001;
+}
+
+.themeToggle:hover {
+  color: var(--ind-primary-light);
 }
 
 /* Mobile: hamburger menu */

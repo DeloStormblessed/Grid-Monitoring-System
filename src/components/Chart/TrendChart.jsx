@@ -62,7 +62,7 @@ const TrendChart = ({
   };
 
   // Márgenes simplificados y estables para evitar warnings de dimensiones negativas
-  const STABLE_MARGINS = { top: 35, right: 20, left: 18, bottom: 35 };
+  const STABLE_MARGINS = { top: 20, right: 20, left: 45, bottom: 20 };
 
   return (
     <div className={styles.chartWrapper} onMouseUp={handleMouseUp} onMouseLeave={handleMouseUp}>

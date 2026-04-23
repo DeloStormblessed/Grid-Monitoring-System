@@ -8,10 +8,10 @@
 /* 1. Paleta de colores industrial */
 :root {
   /* Fondos */
-  --ind-bg: #eef0f4; /* Fondo general (gris industrial claro) */
+  --ind-bg: #f2eef4; /* Fondo general (gris industrial claro) */
   --ind-surface: #ffffff; /* Paneles, tarjetas, tablas */
   --ind-surface-alt: #f5f6f8; /* Sidebar KPIs, table header */
-  --ind-header: #1b2a3d; /* Navbar (oscuro tipo SCADA) */
+  --ind-header: #013b3b; /* Navbar (oscuro tipo SCADA) */
 
   /* Bordes */
   --ind-border: #d0d4da;
@@ -46,6 +46,44 @@
   --border-thickness: 1px;
   --main-border: var(--border-thickness) solid var(--ind-border);
   --primary-bg: var(--ind-surface);
+}
+
+/* Modo Noche */
+html[data-theme="dark"] {
+  /* Fondos */
+  --ind-bg: #010326; /* Fondo general (azul muy oscuro) */
+  --ind-surface: #262840; /* Paneles, tarjetas, tablas */
+  --ind-surface-alt: #243447; /* Sidebar KPIs, table header */
+  --ind-header: #262840; /* Navbar (más oscuro) */
+
+  /* Bordes */
+  --ind-border: #354a5e;
+  --ind-border-strong: #4a5f77;
+
+  /* Acentos */
+  --ind-primary: #00d4d4; /* Cyan vibrante */
+  --ind-primary-light: #00e6e6; /* Hover cyan más claro */
+  --ind-primary-dark: #00a0a0;
+
+  /* Texto */
+  --ind-text: #e8eef5; /* Texto principal (blanco-gris claro) */
+  --ind-text-muted: #8896ab; /* Labels, subtítulos (gris azulado) */
+  --ind-text-on-dark: #e8eef5; /* Texto sobre fondo oscuro */
+
+  /* Estados */
+  --ind-danger: #ff6b7a;
+  --ind-danger-bg: #3d1f23;
+  --ind-warning: #ffa726;
+  --ind-warning-bg: #4a2c0f;
+  --ind-success: #66bb6a;
+  --ind-success-bg: #1f3d20;
+
+  /* Gráficos */
+  --ind-chart-line: #00d4d4;
+
+  /* Sombras */
+  --ind-shadow: 0 1px 3px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --ind-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.6), 0 2px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* 2. Reset total y Box Sizing */
@@ -106,7 +144,6 @@ button {
   min-height: 0;
   display: flex;
   padding: 10px;
-  padding-top: 10px;
 }
 
 /* Small phones (400px+) */

@@ -161,7 +161,10 @@
     font-size: 0.65rem;
   }
 }
-
+/* Centrar tspan dentro de los contenedores SVG */
+:global(.recharts-label) tspan {
+  text-anchor: middle !important;
+}
 /* Desktop */
 @media (min-width: 1024px) {
   .title {

@@ -1,6 +1,6 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ApiContext } from '../context/ApiContext';
+import { useGridData } from '../hooks/hook';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import GaugeChart from '../components/Chart/GaugeChart';
@@ -9,24 +9,29 @@ import styles from './AnalisisZona.module.css';
 const AnalisisZona = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { busesData, isLoading, error, selectedHour, setSelectedHour } = useContext(ApiContext);
+  const { 
+    isLoading, 
+    error, 
+    selectedHour, 
+    setSelectedHour,
+    busesData,
+    getBusInfo,
+    getBusHourData,
+    calculateAverageVoltage,
+    getVoltageReadings
+  } = useGridData();
 
   // 1. Obtener la información del bus específico
-  const busInfo = busesData ? busesData[id] : null;
+  const busInfo = useMemo(() => getBusInfo(id), [id, busesData]);
 
-  // 2. Datos de la hora seleccionada (protección contra nulos)
+  // 2. Datos de la hora seleccionada
   const currentHourData = useMemo(() => {
-    return busInfo?.datosHorarios.find(d => d.hora === selectedHour) || busInfo?.datosHorarios[0] || {};
-  }, [busInfo, selectedHour]);
+    return getBusHourData(id);
+  }, [id, selectedHour]);
 
   // 3. Lógica de Estado: Cálculo de promedio para determinar estado general
   const avgVoltage = useMemo(() => {
-    const validVoltages = [currentHourData.v1, currentHourData.v2, currentHourData.v3]
-      .filter(v => v !== null && v !== undefined);
-
-    return validVoltages.length > 0 
-      ? validVoltages.reduce((sum, v) => sum + v, 0) / validVoltages.length 
-      : null;
+    return calculateAverageVoltage(currentHourData.v1, currentHourData.v2, currentHourData.v3);
   }, [currentHourData]);
 
   // 4. Configuración de límites y etiquetas para el eje Y
@@ -41,11 +46,11 @@ const AnalisisZona = () => {
   const yAxisTicks = useMemo(() => [0.94, 0.96, 1.00, 1.04, 1.06], []);
 
   // Early returns AFTER all hooks
-  if (isLoading || !busesData) {
+  if (isLoading || !busInfo) {
     return (
       <div className={styles.pageContainer}>
         <div className={styles.header}>
-          <h2 className={styles.title}>Cargando zona...</h2>
+          <h2 className={styles.title}>Cargando</h2>
         </div>
       </div>
     );

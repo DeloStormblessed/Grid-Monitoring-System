@@ -1,5 +1,5 @@
-import React, { useContext, useMemo } from 'react';
-import { ApiContext } from '../context/ApiContext';
+import React, { useMemo } from 'react';
+import { useGridData } from '../hooks/hook';
 import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import ZonesTable from '../components/ZonesTable/ZonesTable';
@@ -8,55 +8,33 @@ import styles from './Dashboard.module.css';
 const Dashboard = () => {
   const { 
     systemData, 
-    busesData, 
     isLoading, 
     error, 
     selectedHour, 
     setSelectedHour, 
-    weather 
-  } = useContext(ApiContext);
+    weather,
+    currentSystemData,
+    getAtRiskZones,
+    formatWeather
+  } = useGridData();
 
   // Declarar TODOS los hooks primero (antes de cualquier return condicional)
-  const currentData = useMemo(() => {
-    if (!systemData || systemData.length === 0) return null;
-    return systemData.find(item => item.hora === selectedHour) || systemData[0];
+  const atRiskZones = useMemo(() => {
+    return getAtRiskZones({
+      statusDanger: styles.statusDanger,
+      statusWarning: styles.statusWarning
+    });
   }, [systemData, selectedHour]);
 
-  const atRiskZones = useMemo(() => {
-    if (!busesData) return [];
-    return Object.entries(busesData)
-      .map(([id, info]) => {
-        const hourData = info.datosHorarios.find(d => d.hora === selectedHour) || {};
-        const voltages = [hourData.v1, hourData.v2, hourData.v3].filter(v => v != null);
-        
-        let colorClass = null;
-        let priority = 3;
-
-        voltages.forEach(v => {
-          if (v <= 0.94 || v >= 1.06) {
-            colorClass = styles.statusDanger;
-            priority = 1;
-          } else if ((v <= 0.96 || v >= 1.04) && priority > 1) {
-            colorClass = styles.statusWarning;
-            priority = 2;
-          }
-        });
-
-        return { id, nombre: info.zona, colorClass, priority };
-      })
-      .filter(z => z.priority < 3)
-      .sort((a, b) => a.priority - b.priority);
-  }, [busesData, selectedHour]);
-
   const kpis = useMemo(() => {
-    const weatherParts = weather.split(' | ');
-    const climaValue = weatherParts.length === 2 ? (
+    const weatherFormatted = formatWeather();
+    const climaValue = weatherFormatted.isMultiline ? (
       <div className={styles.multiLineKpi}>
-        <span>{weatherParts[0]}</span>
+        <span>{weatherFormatted.parts[0]}</span>
         <span className={styles.separator}>|</span>
-        <span>{weatherParts[1]}</span>
+        <span>{weatherFormatted.parts[1]}</span>
       </div>
-    ) : weather;
+    ) : weatherFormatted.value;
 
     const dangerZones = atRiskZones.filter(z => z.priority === 1).length;
     const warningZones = atRiskZones.filter(z => z.priority === 2).length;
@@ -92,7 +70,7 @@ const Dashboard = () => {
       </div>
     );
 
-    if (!currentData) {
+    if (!currentSystemData) {
       return [
         { id: 1, title: 'Estado de Zonas', value: zonesDisplay, status: zoneStatus },
         { id: 2, title: 'Demanda Total', value: '--' },
@@ -103,11 +81,11 @@ const Dashboard = () => {
 
     return [
       { id: 1, title: 'Estado de Zonas', value: zonesDisplay, status: zoneStatus },
-      { id: 2, title: 'Demanda Total', value: `${parseFloat(currentData.demandaTotalKw.toFixed(1)).toLocaleString('es-ES')} kW` },
-      { id: 3, title: 'Pérdidas Totales', value: `${parseFloat(currentData.perdidasKw.toFixed(1)).toLocaleString('es-ES')} kW` },
+      { id: 2, title: 'Demanda Total', value: `${parseFloat(currentSystemData.demandaTotalKw.toFixed(1)).toLocaleString('es-ES')} kW` },
+      { id: 3, title: 'Pérdidas Totales', value: `${parseFloat(currentSystemData.perdidasKw.toFixed(1)).toLocaleString('es-ES')} kW` },
       { id: 4, title: 'Clima (LPA)', value: climaValue }
     ];
-  }, [currentData, weather, atRiskZones]);
+  }, [currentSystemData, weather, atRiskZones]);
 
   // AHORA se pueden hacer los early returns
   if (isLoading) {

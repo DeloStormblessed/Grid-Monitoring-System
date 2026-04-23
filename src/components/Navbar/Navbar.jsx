@@ -1,13 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle, FaMoon, FaSun } from 'react-icons/fa';
 import styles from './Navbar.module.css';
 
 const Navbar = () => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    // Cargar preferencia del tema al montar el componente
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    setIsDarkMode(savedTheme === 'dark');
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
+
   const toggleMenu = () => {
       setIsOpen(!isOpen);
+  };
+
+  const toggleTheme = () => {
+    const newTheme = isDarkMode ? 'light' : 'dark';
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
 return (
@@ -18,6 +34,9 @@ return (
         </div>
 
         <div className={styles.rightGroups}>
+          <button className={styles.themeToggle} onClick={toggleTheme} title={isDarkMode ? 'Modo claro' : 'Modo oscuro'}>
+            {isDarkMode ? <FaSun size={20} /> : <FaMoon size={20} />}
+          </button>
           <div className={styles.admin}>
             <FaUserCircle size={25} title='Admin' />
           </div>
