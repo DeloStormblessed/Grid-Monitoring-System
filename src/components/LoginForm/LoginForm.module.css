@@ -1,0 +1,74 @@
+/* src/components/LoginForm.module.css */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  max-width: 320px;
+  padding: 30px;
+  background-color: rgba(1, 59, 59, 0.75);
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  color: var(--ind-text-on-dark);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 0.9rem;
+  color: var(--ind-text-on-dark);
+}
+
+.input {
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  outline: none;
+  color: var(--ind-text-on-dark);
+  background-color: rgba(255, 255, 255, 0.1);
+  transition:
+    border-color 0.3s,
+    background-color 0.3s;
+}
+
+/* Clases de estado de error */
+.inputError {
+  border-color: var(--ind-danger) !important;
+  background-color: rgba(255, 77, 79, 0.1) !important;
+}
+
+.errorMessage {
+  color: var(--ind-danger);
+  font-size: 13px;
+  text-align: center;
+  margin: -5px 0 -5px 0;
+  font-weight: bold;
+}
+
+.button {
+  padding: 12px;
+  background-color: #1a1a1a;
+  color: var(--ind-text-on-dark);
+  border: 1px solid #333;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 5px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #2a2a2a;
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .form {
+    padding: 20px;
+  }
+}

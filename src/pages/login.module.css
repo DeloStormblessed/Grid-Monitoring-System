@@ -1,0 +1,98 @@
+/* src/pages/Login.module.css */
+
+.pageContainer {
+  min-height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.contentWrapper {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+  width: 100%;
+  padding: 20px;
+}
+
+.headerTitles {
+  text-align: center;
+  color: var(--ind-text-on-dark);
+}
+
+.mainTitle {
+  font-size: 3.5rem;
+  font-weight: normal;
+  margin: 0 0 15px 0;
+  letter-spacing: 1px;
+}
+
+.subTitle {
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  margin: 0;
+}
+
+/* =========================================
+   📱 RESPONSIVE: MÓVILES EN VERTICAL (< 600px)
+   ========================================= */
+@media (max-width: 600px) {
+  .contentWrapper {
+    gap: 25px; /* Reducimos a la mitad el espacio entre títulos y formulario */
+    padding: 15px;
+  }
+  .mainTitle {
+    font-size: 2rem; /* Letra mucho más contenida */
+    margin-bottom: 8px;
+  }
+  .subTitle {
+    font-size: 0.85rem; /* Subtítulo legible pero que no robe protagonismo */
+    letter-spacing: 1px;
+  }
+  .form {
+    padding: 20px;
+  }
+}
+
+/* =========================================
+   🔄 RESPONSIVE: MÓVILES EN HORIZONTAL (Landscape < 500px alto)
+   ========================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+  .pageContainer {
+    /* Forzamos que se adapte al alto exacto para evitar el scroll del navegador */
+    height: 100vh;
+    overflow: hidden;
+  }
+  .contentWrapper {
+    gap: 10px; /* Reducción extrema del espacio vacío */
+    padding: 5px;
+  }
+  .mainTitle {
+    font-size: 1.5rem; /* Tamaño compacto */
+    margin-bottom: 2px;
+  }
+  .subTitle {
+    font-size: 0.7rem;
+    letter-spacing: 0.5px;
+  }
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './WelcomeModal.module.css';
+import styles from './WelcomeModal.module.css';
 
 const WelcomeModal = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -13,6 +13,20 @@ const WelcomeModal = () => {
     }
   }, []); 
 
+  // NUEVO: Bloquear el scroll mientras el modal esté visible
+  useEffect(() => {
+    if (isVisible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Función de limpieza al desmontar
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isVisible]);
+
   const handleClose = () => {
     setIsVisible(false);
     // CAMBIO: Guardamos en sessionStorage
@@ -24,14 +38,13 @@ const WelcomeModal = () => {
   }
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content">
-        <h2>¡Bienvenido al Panel de la Red Eléctrica!</h2>
-        <p>Aquí podrás monitorear el estado de distribución, visualizar métricas de consumo y analizar el rendimiento en tiempo real.</p>
-        <p>Haz clic en el botón de abajo para empezar a explorar las gráficas.</p>
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h2>Bienvenido al panel de tu microred</h2>
+        <p>Aquí podrás monitorear el estado de la red, visualizar métricas de consumo, el estado de las zonas y detectar fallos en tiempo real.</p>
         
         <button 
-          className="btn-primary" 
+          className={styles.btnPrimary} 
           onClick={handleClose}
         >
           Entendido, ver panel
