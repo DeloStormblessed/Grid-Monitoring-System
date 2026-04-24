@@ -18,6 +18,8 @@
   transition: all 0.15s ease-out;
   display: flex;
   flex-direction: column;
+  /* 🟢 AÑADIDO: Bloqueamos el scroll nativo aquí para mantener el JSX limpio */
+  touch-action: none;
 }
 
 .chartTitle {
@@ -64,12 +66,13 @@
 :global(.recharts-legend-wrapper) text {
   text-anchor: middle;
 }
+
 /* Optimización para dispositivos táctiles */
 @media (hover: none) and (pointer: coarse) {
   .chartWrapper {
     -webkit-user-select: none;
     user-select: none;
-    touch-action: pan-y;
+    touch-action: none;
   }
 
   .chartTitle {

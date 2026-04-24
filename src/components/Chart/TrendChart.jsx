@@ -24,7 +24,10 @@ const TrendChart = ({
 
   const initialKeys = dataKeys || [dataKey];
   const initialColors = colors.length > 0 ? colors : [color];
+  
+  const chartRef = useRef(null);
   const isDragging = useRef(false);
+  const STABLE_MARGINS = { top: 20, right: 20, left: 45, bottom: 20 };
 
   const activeKeysInfo = initialKeys.reduce((acc, key, index) => {
     const hasData = data.some(item => item[key] !== null && item[key] !== undefined);
@@ -34,55 +37,67 @@ const TrendChart = ({
     return acc;
   }, []);
 
-  const updateHour = useCallback((state) => {
-    if (state && state.activeLabel !== undefined) {
-      const hour = Number(state.activeLabel);
-      if (hour !== selectedHour) {
-        onSliderChange?.(hour);
-      }
+  // --- LÓGICA MATEMÁTICA PURA (Independiente de Recharts) ---
+  const handlePointerEvent = useCallback((e) => {
+    if (!chartRef.current) return;
+
+    // Obtenemos las dimensiones reales del contenedor en la pantalla
+    const rect = chartRef.current.getBoundingClientRect();
+    
+    // Ancho útil restando los márgenes
+    const chartWidth = rect.width - STABLE_MARGINS.left - STABLE_MARGINS.right;
+    
+    // Posición del toque (e.clientX funciona para ratón y táctil en PointerEvents)
+    const xPosition = e.clientX - rect.left - STABLE_MARGINS.left;
+
+    // Calculamos porcentaje y lo limitamos entre 0 y 1
+    let percentage = xPosition / chartWidth;
+    percentage = Math.max(0, Math.min(1, percentage));
+
+    const hour = Math.round(percentage * 23);
+
+    if (hour !== selectedHour) {
+      onSliderChange?.(hour);
     }
   }, [selectedHour, onSliderChange]);
 
-  const handleClick = (state) => {
-    updateHour(state);
-  };
-
-  const handleMouseDown = () => {
+  // --- MANEJO DE EVENTOS UNIVERSALES (Pointer Events) ---
+  const handlePointerDown = (e) => {
     isDragging.current = true;
+    // Capturamos el puntero para que no se pierda si el dedo sale un poco del gráfico al arrastrar
+    e.target.setPointerCapture(e.pointerId); 
+    handlePointerEvent(e);
   };
 
-  const handleMouseMove = (state) => {
-    if (isDragging.current) {
-      updateHour(state);
-    }
+  const handlePointerMove = (e) => {
+    if (!isDragging.current) return;
+    handlePointerEvent(e);
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = (e) => {
     isDragging.current = false;
+    e.target.releasePointerCapture(e.pointerId);
   };
-
-  const STABLE_MARGINS = { top: 20, right: 20, left: 45, bottom: 20 };
 
   return (
-    <div 
-      className={styles.chartWrapper} 
-      onMouseUp={handleMouseUp} 
-      onMouseLeave={handleMouseUp}
-      /* --- NUEVOS EVENTOS TÁCTILES --- */
-      onTouchEnd={handleMouseUp}
-      onTouchCancel={handleMouseUp}
-    >
-      <div className={styles.chartInnerContainer}>
+    <div className={styles.chartWrapper}>
+      <div 
+        className={styles.chartInnerContainer}
+        ref={chartRef}
+        /* Asignamos los eventos universales aquí */
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        /* Bloqueamos el scroll nativo del móvil en esta zona para poder deslizar fluidamente */
+        style={{ touchAction: 'none' }} 
+      >
         <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
           <AreaChart 
             data={data} 
-            margin={STABLE_MARGINS} 
-            onClick={handleClick} 
-            onMouseDown={handleMouseDown} 
-            onMouseMove={handleMouseMove}
-            /* --- NUEVOS EVENTOS TÁCTILES --- */
-            onTouchStart={handleMouseDown}
-            onTouchMove={handleMouseMove}
+            margin={STABLE_MARGINS}
+            /* MAGIA: Desactivamos todos los eventos internos de Recharts */
+            style={{ pointerEvents: 'none' }} 
           >
             <defs>
               {activeKeysInfo.map((info) => (
