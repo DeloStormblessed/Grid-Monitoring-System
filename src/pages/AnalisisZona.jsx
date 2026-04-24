@@ -86,7 +86,7 @@ const AnalisisZona = () => {
       {/* Cabecera con navegación dentro del contenedor principal */}
       <div className={styles.header}>
         <button
-          onClick={() => navigate('/')}
+          onClick={() => navigate(-1)}
           className={styles.backButton}
         >
           ← VOLVER

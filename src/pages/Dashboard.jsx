@@ -4,6 +4,7 @@ import InfoCard from '../components/InfoCard/InfoCard';
 import TrendChart from '../components/Chart/TrendChart';
 import ZonesTable from '../components/ZonesTable/ZonesTable';
 import styles from './Dashboard.module.css';
+import WelcomeModal from '../components/WelcomeModal/WelcomeModal'; // Importación de tu Pop-up
 
 const Dashboard = () => {
   const { 
@@ -108,9 +109,13 @@ const Dashboard = () => {
     );
   }
 
-// src/pages/Dashboard.jsx
+  // src/pages/Dashboard.jsx
   return (
     <div className={styles.pageContainer}>
+      
+      {/* AQUÍ ESTÁ INTEGRADO EL POP-UP */}
+      <WelcomeModal />
+
       <div className={styles.header}>
         <h1 className={styles.title}>Curva de demanda: Modelo tipo</h1>
       </div>
