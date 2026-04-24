@@ -1,3 +1,4 @@
+/* ─── Contenedor principal ──────────────────────────────────────────────────── */
 .tableContainer {
   width: 100%;
   height: 100%;
@@ -9,6 +10,7 @@
   box-shadow: var(--ind-shadow);
 }
 
+/* ─── Tabla ─────────────────────────────────────────────────────────────────── */
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -54,7 +56,16 @@
   margin-left: 8px;
 }
 
-/* Identificadores visuales de estados */
+/* ─── Estado vacío ───────────────────────────────────────────────────────────── */
+.emptyState {
+  padding: 28px 0 !important;
+  color: var(--ind-text-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ─── Badges de estado ───────────────────────────────────────────────────────── */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -87,7 +98,7 @@
   border: 1px solid var(--ind-success);
 }
 
-/* Botón de Detalles */
+/* ─── Botón Detalles ─────────────────────────────────────────────────────────── */
 .actionCell {
   width: 12%;
   min-width: 110px;
@@ -115,7 +126,270 @@
   color: #fff;
 }
 
-/* Tablet: ajustar tamaño para evitar roturas entre 600 y 1024px */
+/* ════════════════════════════════════════════════════════════════════════════ */
+/* PANEL DE FILTROS                                                             */
+/* ════════════════════════════════════════════════════════════════════════════ */
+
+.filterPanel {
+  background-color: var(--ind-surface-alt);
+  border-bottom: 1px solid var(--ind-border-strong);
+  padding: 0;
+}
+
+/* Cabecera */
+.filterHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px 8px;
+  border-bottom: 1px solid var(--ind-border);
+}
+
+.filterTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ind-text-muted);
+}
+
+.resetBtn {
+  background: transparent;
+  border: 1px solid var(--ind-border-strong);
+  color: var(--ind-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.resetBtn:hover {
+  border-color: var(--ind-primary);
+  color: var(--ind-primary);
+  background-color: rgba(0, 153, 153, 0.06);
+}
+
+/* Grid de grupos de filtro */
+.filterGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.filterGroup {
+  padding: 10px 14px;
+  border-right: 1px solid var(--ind-border);
+  border-bottom: 1px solid var(--ind-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Quitar borde derecho en columna par */
+.filterGroup:nth-child(2n) {
+  border-right: none;
+}
+
+.filterLabel {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--ind-text-muted);
+  user-select: none;
+}
+
+/* Input de búsqueda libre */
+.searchInput {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid var(--ind-border);
+  border-radius: 4px;
+  background-color: var(--ind-surface);
+  color: var(--ind-text);
+  font-size: 0.85rem;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  border-color: var(--ind-primary);
+  box-shadow: 0 0 0 2px rgba(0, 153, 153, 0.2);
+}
+
+.searchInput::placeholder {
+  color: var(--ind-text-muted);
+}
+
+/* ─── Chips de selección múltiple ────────────────────────────────────────────── */
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.chip {
+  background: var(--ind-surface);
+  border: 1px solid var(--ind-border-strong);
+  color: var(--ind-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 4px 9px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--ind-primary);
+  color: var(--ind-primary);
+}
+
+.chipActive {
+  background-color: var(--ind-primary);
+  border-color: var(--ind-primary);
+  color: #fff;
+}
+
+.chipActive:hover {
+  background-color: var(--ind-primary);
+  color: #fff;
+  opacity: 0.85;
+}
+
+/* ─── Dual Range Slider ───────────────────────────────────────────────────────── */
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 2px;
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ind-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.sliderTrackOuter {
+  position: relative;
+  height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.sliderTrackBg {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--ind-border-strong);
+}
+
+.sliderTrackFill {
+  position: absolute;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--ind-primary);
+  pointer-events: none;
+  /* left y width se asignan vía JS */
+}
+
+/* Inputs de rango superpuestos */
+.sliderInput {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+  pointer-events: none;
+  outline: none;
+  margin: 0;
+}
+
+/* Thumb compartido */
+.sliderInput::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ind-primary);
+  border: 2px solid var(--ind-surface);
+  box-shadow: 0 0 0 1px var(--ind-primary);
+  cursor: grab;
+  pointer-events: all;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.sliderInput::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ind-primary);
+  border: 2px solid var(--ind-surface);
+  box-shadow: 0 0 0 1px var(--ind-primary);
+  cursor: grab;
+  pointer-events: all;
+}
+
+.sliderInput::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px rgba(0, 153, 153, 0.2);
+}
+
+.sliderInput:active::-webkit-slider-thumb {
+  cursor: grabbing;
+  transform: scale(1.2);
+  box-shadow: 0 0 0 5px rgba(0, 153, 153, 0.25);
+}
+
+/* Thumb del slider alto (z-index mayor cuando el rango es grande, para que sea clickable) */
+.sliderHigh {
+  z-index: 2;
+}
+
+.sliderLow {
+  z-index: 3;
+}
+
+.filterHeaderRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.resultCount {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ind-text-muted);
+  letter-spacing: 0.3px;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════ */
+/* RESPONSIVE                                                                   */
+/* ════════════════════════════════════════════════════════════════════════════ */
+
+/* Tablet */
 @media (max-width: 1023px) {
   .table th,
   .table td {
@@ -149,8 +423,20 @@
   }
 }
 
-/* Mobile: tabla compacta, ocultar columnas secundarias */
+/* Mobile */
 @media (max-width: 599px) {
+  .filterGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filterGroup:nth-child(2n) {
+    border-right: 1px solid var(--ind-border);
+  }
+
+  .filterGroup {
+    border-right: none;
+  }
+
   .table th,
   .table td {
     padding: 6px 4px;

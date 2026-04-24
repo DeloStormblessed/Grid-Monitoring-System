@@ -135,7 +135,7 @@ const Zonas = () => {
         selectedHour={selectedHour}
         onHourChange={setSelectedHour}
       />
-            <ZonesTable selectedHour={selectedHour} />
+            <ZonesTable selectedHour={selectedHour} showFilter={true}/>
           </div>
       </div>
     </div>

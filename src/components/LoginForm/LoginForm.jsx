@@ -46,7 +46,7 @@ function LoginForm() {
           type="text" 
           value={username}
           onChange={handleUsernameChange} 
-          placeholder="Introduce tu usuario"
+          placeholder="Introduce tu usuario (admin)"
           className={`${styles.input} ${errorMessage ? styles.inputError : ''}`}
         />
       </div>
@@ -57,7 +57,7 @@ function LoginForm() {
           type="password" 
           value={password}
           onChange={handlePasswordChange} 
-          placeholder="Introduce tu contraseña"
+          placeholder="Introduce tu contraseña (1234)"
           className={`${styles.input} ${errorMessage ? styles.inputError : ''}`}
         />
       </div>
