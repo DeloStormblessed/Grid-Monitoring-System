@@ -12,7 +12,7 @@ const NotFound = () => {
         <h1 className={styles.errorCode}>404</h1>
         <h2 className={styles.title}>Enlace No Encontrado</h2>
         <p className={styles.description}>
-          El sector de la red al que intentas acceder no existe, ha sido movido, o se encuentra actualmente en fase de construcción.
+          La sección del sistema al que intentas acceder no existe, ha sido movido, o se encuentra actualmente en fase de construcción.
         </p>
         
         <button 
